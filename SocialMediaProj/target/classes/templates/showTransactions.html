@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.material.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/r/dt/dt-1.10.9/datatables.min.css"/>
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+    <script src="https://cdn.datatables.net/r/dt/dt-1.10.9/datatables.min.js"></script>
+
+
+    <script type="text/javascript">
+var datares;
+        $(document).ready(function() {
+    $.ajax({
+        type: 'GET',
+        url: "http://localhost:8080/getTransactions",
+        content: "json",
+        dataType: "json"
+    }).then(function(data) {
+        console.log('data :',data);
+//div3
+ datares = jQuery.map(data.transactions, function(el, i) {
+      return [[el.date, el.transactionDetail, el.amount]];
+    });
+
+        console.log('datares :',datares);
+    $('#example1').DataTable( {
+      "aaData": datares,
+      "aoColumns": [
+        { "sTitle": "Transaction Date" },
+        { "sTitle": "Transaction Details" },
+        { "sTitle": "Amount" }
+      ]
+    });
+
+
+
+
+    });
+});
+
+<!--
+    $(document).ready(function() {
+    $('#example').DataTable( {
+    columnDefs: [
+    {
+    targets: [ 0, 1, 2 ],
+    className: 'mdl-data-table__cell&#45;&#45;non-numeric'
+    }
+    ]
+    } );
+    } );
+-->
+
+//div3
+        console.log('in div3 start datares :',datares);
+
+    $('#example1').DataTable( {
+      "aaData": datares,
+      "aoColumns": [
+        { "sTitle": "Transaction Date" },
+        { "sTitle": "Transaction Details" },
+        { "sTitle": "Amount" }
+      ]
+    });
+
+        console.log('in div3 end datares :',datares);
+
+
+    </script>
+
+</head>
+<body>
+
+
+<div id="div1">
+    <table id="example1" class="display" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Transaction Date</th>
+            <th>Transaction Details</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+    </table>
+
+
+</div>
+
+
+</body>
+</html>
